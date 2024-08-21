@@ -1,7 +1,4 @@
-import {Component, computed, signal} from '@angular/core';
-import { DUMMY_USERS } from "../dummy-users";
-
-const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+import {Component, computed, Input, input} from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -11,22 +8,23 @@ const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 })
 
 export class UserComponent {
-  /*
-  All features here will be available in the templateUrl component.
-  If we add private to the properties here it only will be available here in this
-  component, but if it's without declaration then will be public and accessible in
-  templateUrl.
-  */
-  selectedUser = signal(DUMMY_USERS[randomIndex]);
-  imagePath = computed(() => 'users/' + this.selectedUser().avatar)
+  // Decorator approach
+  @Input({ required: true }) avatar!: string;
+  @Input({ required: true }) name!: string;
 
-  // This code below was replaced by the above, which use signal approach.
-  // get imagePath() {
-  //   return 'users/' + this.selectedUser.avatar
-  // }
+  get imagePath() {
+    return 'users/' + this.avatar;
+  }
+
+  // Input Decorator approach
+  // avatar = input.required<string>();
+  // name = input.required<string>();
+  //
+  // imagePath = computed(() => {
+  //   return 'users/' + this.avatar();
+  // });
 
   onSelectUser() {
-    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser.set(DUMMY_USERS[randomIndex]);
+
   }
 }
