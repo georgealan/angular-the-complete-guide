@@ -1,5 +1,19 @@
 import {Component, computed, Input, input, Output, output, EventEmitter} from '@angular/core';
 
+// TS type
+// type User = {
+//   id: string;
+//   name: string;
+//   avatar: string;
+// }
+
+// TS interface
+interface User {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -9,11 +23,7 @@ import {Component, computed, Input, input, Output, output, EventEmitter} from '@
 
 export class UserComponent {
   // Instead of use split properties, we can use a complete object.
-  @Input({ required: true }) user!: {
-    id: string;
-    name: string;
-    avatar: string;
-  };
+  @Input({ required: true }) user!: User;
 
   // Decorator approach for output
   @Output() select = new EventEmitter<string>();
