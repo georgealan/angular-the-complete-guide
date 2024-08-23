@@ -8,10 +8,12 @@ import {Component, computed, Input, input, Output, output, EventEmitter} from '@
 })
 
 export class UserComponent {
-  // Decorator approach
-  @Input({ required: true }) id!: string;
-  @Input({ required: true }) avatar!: string;
-  @Input({ required: true }) name!: string;
+  // Instead of use split properties, we can use a complete object.
+  @Input({ required: true }) user!: {
+    id: string;
+    name: string;
+    avatar: string;
+  };
 
   // Decorator approach for output
   @Output() select = new EventEmitter<string>();
@@ -20,7 +22,7 @@ export class UserComponent {
   // select = output<string>(); // it isn't signal event, it is EventEmitter.
 
   get imagePath() {
-    return 'users/' + this.avatar;
+    return 'users/' + this.user.avatar;
   }
 
   // Input Decorator approach
@@ -32,6 +34,6 @@ export class UserComponent {
   // });
 
   onSelectUser() {
-    this.select.emit(this.id);
+    this.select.emit(this.user.id);
   }
 }
